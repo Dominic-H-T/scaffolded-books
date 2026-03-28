@@ -25,7 +25,15 @@ app.get("/", (req, res) => {
 app.post("/submit", (req, res) => {
   const name = (req.body.name || "").trim();
 
+  //the posting of the number
+  const number = (req.body.number || "").trim();
+  
   const safeName = name
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+
+  const safeNumber = number
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
@@ -36,6 +44,7 @@ app.post("/submit", (req, res) => {
   <body>
     <h1>Thanks!</h1>
     <p>You submitted: <strong>${safeName || "(empty)"}</strong></p>
+    <p>You submitted: <strong>${safeNumber || "(empty)"}</strong></p>
     <p><a href="/">Back</a></p>
   </body>
 </html>`);
